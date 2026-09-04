@@ -5,7 +5,6 @@ import sbtheader.HeaderPlugin.autoImport.{HeaderLicense, headerLicense}
 import sbt.Keys._
 import sbt.{Def, _}
 import sbtdynver.DynVerPlugin
-import sbtdynver.DynVerPlugin.autoImport.dynverGitDescribeOutput
 import sbtversionpolicy.SbtVersionPolicyPlugin.autoImport.{Compatibility, versionPolicyCheck, versionPolicyIgnoredInternalDependencyVersions, versionPolicyIntention}
 
 object ScalaModulePlugin extends AutoPlugin {
@@ -18,7 +17,7 @@ object ScalaModulePlugin extends AutoPlugin {
   }
   import autoImport._
 
-  // depend on DynVerPlugin to allow modifying dynverGitDescribeOutput in buildSettings below
+  // modules are versioned by dynver, and this brings in JvmPlugin (sbt/sbt#2082)
   override def requires = DynVerPlugin
 
   override def trigger = allRequirements
@@ -26,10 +25,6 @@ object ScalaModulePlugin extends AutoPlugin {
   // Settings in here are implicitly `in ThisBuild`
   override def buildSettings: Seq[Setting[?]] = Seq(
     scalaModuleEnableOptimizerInlineFrom := "<sources>",
-
-    // drop # suffix from tags
-    dynverGitDescribeOutput ~= (_.map(dv =>
-      dv.copy(ref = sbtdynver.GitRef(dv.ref.value.split('#').head)))),
   )
 
   // Settings added to the project scope
