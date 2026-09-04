@@ -1,0 +1,20 @@
+$ exec git init .
+$ exec git config user.email scala-module@example.org
+$ exec git config user.name scala-module
+$ exec git config commit.gpgSign false
+$ exec git commit --allow-empty -m release
+
+# a clean tagged checkout publishes as a release, not a SNAPSHOT
+$ exec git tag v1.2.3
+> reload
+> checkRelease 1.2.3
+
+# a commit after the tag publishes as a SNAPSHOT
+$ exec git commit --allow-empty -m after-tag
+> reload
+> checkSnapshot 1.2.3+1-
+
+# legacy back-publishing tags: sbt-ci-release drops the '#' suffix
+$ exec git tag v1.3.0#2.13.0
+> reload
+> checkRelease 1.3.0
