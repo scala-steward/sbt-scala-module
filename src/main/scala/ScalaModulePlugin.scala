@@ -119,8 +119,8 @@ object ScalaModulePlugin extends AutoPlugin {
           |""".stripMargin)),
 
     scmInfo              := Some(ScmInfo(url(s"https://github.com/scala/${scalaModuleRepoName.value}"),s"scm:git:git://github.com/scala/${scalaModuleRepoName.value}.git")),
-    homepage             := Some(url("http://www.scala-lang.org/")),
-    organizationHomepage := Some(url("http://www.scala-lang.org/")),
+    homepage             := Some(url("https://www.scala-lang.org/")),
+    organizationHomepage := Some(url("https://www.scala-lang.org/")),
     licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0")),
     startYear            := Some(2002),
     pomIncludeRepository := { _ => false },
